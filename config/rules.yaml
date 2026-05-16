@@ -1,0 +1,14 @@
+domains:
+  api:
+    algorithm: token_bucket
+    capacity: 100
+    refill_rate: 10
+    refill_interval_ms: 1000
+    identifier: ip
+
+  payments:
+    algorithm: token_bucket
+    capacity: 20
+    refill_rate: 2
+    refill_interval_ms: 1000
+    identifier: ip

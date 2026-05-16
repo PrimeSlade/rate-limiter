@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "node dist/server/index.js",
+    "dev": "tsx server/index.ts",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +21,7 @@
     "@testcontainers/redis": "^11.14.0",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.6.2",
+    "testcontainers": "^11.14.0",
     "typescript": "^6.0.3",
     "vitest": "^4.1.5"
   }
