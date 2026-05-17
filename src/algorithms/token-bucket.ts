@@ -3,13 +3,11 @@ import { loadScript, evalScript } from "../store/redis";
 // KEYS[1]: rate-limit key (e.g. ratelimit:api:192.168.1.1)
 // ARGV[1]: capacity          — integer, max tokens
 // ARGV[2]: refill_rate_per_ms — float, tokens/ms (converted from tokens/sec by resolver)
-// ARGV[3]: now_ms            — app clock, for observability only; NOT used for refill math
 // Returns: [allowed (0|1), remaining, reset_at_ms]
 export const LUA_SCRIPT = `
 local capacity           = tonumber(ARGV[1])
 local refill_rate_per_ms = tonumber(ARGV[2])
 
--- Authoritative clock from Redis — never use ARGV[3] for refill math
 local t            = redis.call('TIME')
 local redis_now_ms = tonumber(t[1]) * 1000 + math.floor(tonumber(t[2]) / 1000)
 
@@ -88,7 +86,6 @@ export class TokenBucket {
 
   async check(
     key: string,
-    nowMs: number,
   ): Promise<{ allowed: boolean; remaining: number; resetAtMs: number }> {
     if (!this.sha) {
       this.sha = await loadScript("token-bucket", LUA_SCRIPT);
@@ -97,7 +94,7 @@ export class TokenBucket {
       this.sha,
       LUA_SCRIPT,
       [key],
-      [this.opts.capacity, this.refillRatePerMs, nowMs],
+      [this.opts.capacity, this.refillRatePerMs],
     );
     return { allowed: allowed === 1, remaining, resetAtMs };
   }

@@ -66,7 +66,7 @@ export function createRateLimiter(
 
     let result: { allowed: boolean; remaining: number; resetAtMs: number };
     try {
-      result = await getBucket(opts.domain, rule).check(key, nowMs);
+      result = await getBucket(opts.domain, rule).check(key);
     } catch (err) {
       // Redis unavailable — fail open
       console.error(
