@@ -1,8 +1,8 @@
 domains:
   api:
     algorithm: token_bucket
-    capacity: 100
-    refill_rate: 10
+    capacity: 5
+    refill_rate: 0.05
     refill_interval_ms: 1000
     identifier: ip
 

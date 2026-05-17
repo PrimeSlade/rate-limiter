@@ -21,6 +21,7 @@
     "@testcontainers/redis": "^11.14.0",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.6.2",
+    "dotenv": "^17.4.2",
     "testcontainers": "^11.14.0",
     "tsx": "^4.22.0",
     "typescript": "^6.0.3",
