@@ -1,12 +1,12 @@
 ---
 proposal: PROP-0001
-status: DRAFT
+status: IMPLEMENTED
 ---
 
 # Tech Spec 0001: Token Bucket Algorithm
 
 ## ADR-001: Token Bucket — Two-Field Hash Design
-**Status**: accepted
+**Status**: implemented
 **Context**: The library has no algorithm implementations. `src/store/redis.ts` provides `evalScript(sha, lua, keys, args)` which executes a Lua script via `EVALSHA`, handles `NOSCRIPT` reloads, and returns `[allowed, remaining, reset_at_ms]`. Token Bucket is the first algorithm and must establish the pattern all subsequent algorithms follow.
 **Decision**: Implement Option A (Two-Field Hash) with fields `tokens` and `last_refill_ms`, sourcing elapsed-time from `redis.call('TIME')` exclusively.
 **Consequences**: Correct burst semantics, accurate `X-RateLimit-Remaining`, zero clock-skew exposure in the refill math, O(1) Redis memory per key.
