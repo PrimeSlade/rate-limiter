@@ -12,3 +12,10 @@ domains:
     refill_rate: 2
     refill_interval_ms: 1000
     identifier: ip
+
+  sms_gateway:
+    algorithm: leaky_bucket
+    capacity: 10
+    drain_rate: 2
+    drain_interval_ms: 1000
+    identifier: ip
